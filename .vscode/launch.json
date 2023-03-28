@@ -1,0 +1,45 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+			"name": "SAGA - starter",
+			"type": "go",
+			"request": "launch",
+			"mode": "debug",
+			"program": "${workspaceFolder}/saga/cmd/starter/main.go",
+			"cwd": "${workspaceFolder}"
+		},
+        {
+			"name": "SAGA - worker",
+			"type": "go",
+			"request": "launch",
+			"mode": "debug",
+			"program": "${workspaceFolder}/saga/cmd/worker/main.go",
+			"cwd": "${workspaceFolder}"
+		},
+        {
+			"name": "BOOK CAR - worker",
+			"type": "go",
+			"request": "launch",
+			"mode": "debug",
+			"program": "${workspaceFolder}/bookcar/cmd/worker/main.go",
+			"cwd": "${workspaceFolder}"
+		},
+		{
+			"name": "BOOK HOTEL - worker",
+			"type": "go",
+			"request": "launch",
+			"mode": "debug",
+			"program": "${workspaceFolder}/bookhotel/cmd/worker/main.go",
+			"cwd": "${workspaceFolder}"
+		},
+		{
+			"name": "BOOK FLIGHT - worker",
+			"type": "go",
+			"request": "launch",
+			"mode": "debug",
+			"program": "${workspaceFolder}/bookflight/cmd/worker/main.go",
+			"cwd": "${workspaceFolder}"
+		}
+    ]
+}

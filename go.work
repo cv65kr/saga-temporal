@@ -1,0 +1,7 @@
+go 1.20
+
+use ./saga
+use ./bookcar
+use ./bookhotel
+use ./bookflight
+use ./sdk
