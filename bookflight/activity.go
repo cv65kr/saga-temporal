@@ -5,16 +5,14 @@ import (
 	"errors"
 	"math/rand"
 
-	"go.temporal.io/sdk/activity"
+	"github.com/cv65kr/saga-temporal/sdk"
 )
 
-func Activity(ctx context.Context, name string) (string, error) {
-	logger := activity.GetLogger(ctx)
-	logger.Info("Activity", "name", name)
+func Activity(ctx context.Context, booking sdk.Booking) (string, error) {
 
 	if rand.Intn(2) == 1 {
 		return "", errors.New("Random error to see compenstation")
 	}
 
-	return "Hello " + name + "!", nil
+	return "Hello booking" + booking.Id + "!", nil
 }

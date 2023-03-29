@@ -6,9 +6,9 @@ import (
 	"go.uber.org/multierr"
 )
 
-func SagaWorkflow(ctx workflow.Context, name string) error {
+func SagaWorkflow(ctx workflow.Context, booking sdk.Booking) error {
 	logger := workflow.GetLogger(ctx)
-	logger.Info("SAGA workflow started", "name", name)
+	logger.Info("SAGA workflow started", "booking id", booking.Id)
 
 	// Execute BOOK CAR
 	cwo := workflow.ChildWorkflowOptions{
@@ -16,7 +16,7 @@ func SagaWorkflow(ctx workflow.Context, name string) error {
 	}
 	ctx = workflow.WithChildOptions(ctx, cwo)
 
-	err := workflow.ExecuteChildWorkflow(ctx, "BookCarWorkflow", name).Get(ctx, nil)
+	err := workflow.ExecuteChildWorkflow(ctx, "BookCarWorkflow", booking).Get(ctx, nil)
 	if err != nil {
 		logger.Error("BookCarWorkflow failed.", "Error", err)
 		return err
@@ -29,7 +29,7 @@ func SagaWorkflow(ctx workflow.Context, name string) error {
 				TaskQueue: sdk.BookCarTaskQueue,
 			}
 			ctx = workflow.WithChildOptions(ctx, cwo)
-			errCompensation := workflow.ExecuteChildWorkflow(ctx, "BookCarCompensationWorkflow", name).Get(ctx, nil)
+			errCompensation := workflow.ExecuteChildWorkflow(ctx, "BookCarCompensationWorkflow", booking).Get(ctx, nil)
 			err = multierr.Append(err, errCompensation)
 		}
 	}()
@@ -40,7 +40,7 @@ func SagaWorkflow(ctx workflow.Context, name string) error {
 	}
 	ctx = workflow.WithChildOptions(ctx, cwo)
 
-	err = workflow.ExecuteChildWorkflow(ctx, "BookHotelWorkflow", name).Get(ctx, nil)
+	err = workflow.ExecuteChildWorkflow(ctx, "BookHotelWorkflow", booking).Get(ctx, nil)
 	if err != nil {
 		logger.Error("BookHotelWorkflow failed.", "Error", err)
 		return err
@@ -53,7 +53,7 @@ func SagaWorkflow(ctx workflow.Context, name string) error {
 				TaskQueue: sdk.BookHotelTaskQueue,
 			}
 			ctx = workflow.WithChildOptions(ctx, cwo)
-			errCompensation := workflow.ExecuteChildWorkflow(ctx, "BookHotelCompensationWorkflow", name).Get(ctx, nil)
+			errCompensation := workflow.ExecuteChildWorkflow(ctx, "BookHotelCompensationWorkflow", booking).Get(ctx, nil)
 			err = multierr.Append(err, errCompensation)
 		}
 	}()
@@ -64,7 +64,7 @@ func SagaWorkflow(ctx workflow.Context, name string) error {
 	}
 	ctx = workflow.WithChildOptions(ctx, cwo)
 
-	err = workflow.ExecuteChildWorkflow(ctx, "BookFlightWorkflow", name).Get(ctx, nil)
+	err = workflow.ExecuteChildWorkflow(ctx, "BookFlightWorkflow", booking).Get(ctx, nil)
 	if err != nil {
 		logger.Error("BookFlightWorkflow failed.", "Error", err)
 		return err

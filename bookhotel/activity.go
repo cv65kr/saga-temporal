@@ -3,11 +3,9 @@ package bookhotel
 import (
 	"context"
 
-	"go.temporal.io/sdk/activity"
+	"github.com/cv65kr/saga-temporal/sdk"
 )
 
-func Activity(ctx context.Context, name string) (string, error) {
-	logger := activity.GetLogger(ctx)
-	logger.Info("Activity", "name", name)
-	return "Hello " + name + "!", nil
+func Activity(ctx context.Context, booking sdk.Booking) (string, error) {
+	return "Hello book " + booking.Id + "!", nil
 }

@@ -2,6 +2,8 @@ package main
 
 import (
 	"log"
+	"math/rand"
+	"time"
 
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/worker"
@@ -11,6 +13,8 @@ import (
 )
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
+
 	c, err := client.Dial(client.Options{})
 	if err != nil {
 		log.Fatalln("Unable to create client", err)
@@ -21,7 +25,7 @@ func main() {
 
 	w.RegisterWorkflow(bookcar.BookCarWorkflow)
 	w.RegisterWorkflow(bookcar.BookCarCompensationWorkflow)
-	w.RegisterActivity(bookcar.Activity)
+	w.RegisterActivity(bookcar.PollStatusActivity)
 
 	err = w.Run(worker.InterruptCh())
 	if err != nil {

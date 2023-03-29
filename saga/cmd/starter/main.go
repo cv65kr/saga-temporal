@@ -5,6 +5,8 @@ import (
 	"log"
 
 	"github.com/cv65kr/saga-temporal/saga"
+	"github.com/cv65kr/saga-temporal/sdk"
+	"github.com/google/uuid"
 	"go.temporal.io/sdk/client"
 )
 
@@ -19,7 +21,11 @@ func main() {
 		TaskQueue: "saga-tq",
 	}
 
-	workflowRun, err := c.ExecuteWorkflow(context.Background(), workflowOptions, saga.SagaWorkflow, "Temporal")
+	booking := sdk.Booking{
+		Id: uuid.New().String(),
+	}
+
+	workflowRun, err := c.ExecuteWorkflow(context.Background(), workflowOptions, saga.SagaWorkflow, booking)
 	if err != nil {
 		log.Fatalln("Unable to execute workflow", err)
 	}

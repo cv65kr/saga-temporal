@@ -3,8 +3,10 @@ module github.com/cv65kr/saga-temporal/saga
 go 1.20
 
 require (
+	github.com/cv65kr/saga-temporal/sdk v0.0.0-20230328215105-e53bfc38f66a
 	github.com/stretchr/testify v1.8.1
 	go.temporal.io/sdk v1.21.1
+	go.uber.org/multierr v1.1.0
 )
 
 require (

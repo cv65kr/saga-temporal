@@ -1,15 +1,18 @@
 package saga
 
-import "go.temporal.io/sdk/workflow"
+import (
+	"github.com/cv65kr/saga-temporal/sdk"
+	"go.temporal.io/sdk/workflow"
+)
 
-func BookCarWorkflowSuccessMock(ctx workflow.Context, name string) error {
+func BookCarWorkflowSuccessMock(ctx workflow.Context, booking sdk.Booking) error {
 	return nil
 }
 
-func BookHotelWorkflowSuccessMock(ctx workflow.Context, name string) error {
+func BookHotelWorkflowSuccessMock(ctx workflow.Context, booking sdk.Booking) error {
 	return nil
 }
 
-func BookFlightWorkflowSuccessMock(ctx workflow.Context, name string) error {
+func BookFlightWorkflowSuccessMock(ctx workflow.Context, booking sdk.Booking) error {
 	return nil
 }
